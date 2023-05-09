@@ -64,7 +64,7 @@ export const paymentverification=async(req,res)=>{
  );
  await payment.save().then((val)=>{
   console.log(val);
-  res.redirect(`http://localhost:3000/paymentsucess?id=${val._id}`)
+  res.redirect(`https://v-gther-frontend.vercel.app/paymentsucess?id=${val._id}`)
 
  });
 
