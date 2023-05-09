@@ -1,7 +1,13 @@
-import mongoose from "mongoose";
+import mongoose  from "mongoose";
 
 export const connectDB=async()=>{
-   const {connection}=await mongoose.connect(process.env.MONGO_URI);
-    console.log(`Mongodb is connected with  ${connection.host}`)
+   await mongoose.connect('mongodb+srv://vghter:f1Rzsql566XrA3yQ@cluster0.ysjjrub.mongodb.net/?retryWrites=true&w=majority',{
 
+   useNewUrlParser: true, 
+   
+   useUnifiedTopology: true 
+   
+   }).then(()=>
+    console.log(`Mongodb is connected `)
+  )
 }   
