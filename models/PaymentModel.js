@@ -12,6 +12,10 @@ const PaymentSchema=new mongoose.Schema({
         type:String,
         required:true,  
     },
+    parent_number:{
+        type:String,
+        required:true
+    },
     tickets:[{
         name:{
             type: String,
@@ -24,7 +28,8 @@ const PaymentSchema=new mongoose.Schema({
         ticket_number:{
             type:String,
             // required:true,
-        }
+        },
+        
     },
     
 ]

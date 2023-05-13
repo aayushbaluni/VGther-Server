@@ -30,7 +30,7 @@ client.verify.v2.services('VA2df4b23b228f85e7218a1332bbdb1d9f')
 .verifications
 .create({to: '+91'+req.body.number, channel: 'sms'})
 .then(verification => {
-    console.log(verification.status);
+    console.log(verification);
     res.send(verification);
 });
 
@@ -52,11 +52,21 @@ const client = twillo(accountSid, authToken);
     //     .then(data => {
     //         res.status(200).send(data);
     //     });
+    console.log(req.body.code);
+   try{
     client.verify.v2.services('VA2df4b23b228f85e7218a1332bbdb1d9f')
-      .verificationChecks
-      .create({to: '+91'+req.body.number, code: req.body.code})
-      .then(verification_check =>{ console.log(verification_check.status);
-        res.send(verification_check);
-    });
+    .verificationChecks
+    .create({to: '+919079073202', code: ""+req.body.code})
+    .then(verification_check =>{ console.log(verification_check.status);
+      res.send(verification_check.status);
+  }).catch(e=>{
+    console.log(e);
+   res.send('error');
+  });
+   }
+   catch(e){
+     console.log(e);
+    res.send('error');
+   }
 
 };

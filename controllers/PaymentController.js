@@ -21,6 +21,7 @@ export const checkout= async(req,res)=>{
   const orders= await OrderModel.create({
     order_id:order.id,
   });
+  console.log(req.body.notes);
   req.body.notes.map((val,i)=>orders.peoples.push(val));
  const ord= await orders.save();
   console.log(orders)
@@ -48,13 +49,14 @@ export const paymentverification=async(req,res)=>{
  console.log(razorpay_signature);
  const order=await instance.orders.fetch(razorpay_order_id);
  console.log(order.notes);
+
+ const orders=await OrderModel.find({order_id:razorpay_order_id});
  const payment=await PaymentModel.create({
+  parent_number:req.query.parent_number,
  razorpay_order_id:razorpay_order_id,
   razorpay_payment_id:razorpay_payment_id,
   razorpay_signature:razorpay_signature,
  });
- const orders=await OrderModel.find({order_id:razorpay_order_id});
- 
  const peoples=orders[0].peoples;
  peoples.map((val,i)=>payment.tickets.push({
   name:val.name,
@@ -74,5 +76,11 @@ export const paymentverification=async(req,res)=>{
 export const getpayment=async(req,res)=>{
   const {id}=req.body;
   const result=await PaymentModel.findById(id);
+  res.send(result);
+}
+
+export const getAllPayment=async(req,res)=>{
+  const {number}=req.body;
+  const result=await PaymentModel.find({parent_number:number});
   res.send(result);
 }

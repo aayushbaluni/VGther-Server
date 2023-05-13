@@ -7,6 +7,7 @@ const Users=new mongoose.Schema({
     number:{
         type:Number,
         required:true,
+        
     }
 });
 
