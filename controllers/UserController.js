@@ -1,5 +1,6 @@
 import mongoose  from "mongoose"
 import {UserModel} from "../models/UserModel.js"
+import axios from "axios";
  export  const register=async(req,res)=>{
     const {name,number}=req.body;
     const result=await UserModel.find({number:number});
