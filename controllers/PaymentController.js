@@ -66,7 +66,7 @@ export const paymentverification=async(req,res)=>{
  );
  await payment.save().then((val)=>{
   console.log(val);
-  res.redirect(`https://google.com`)
+  res.redirect(`https://www.vgthr.com/paymentsucess?id=${val._id}`)
 
  });
 
