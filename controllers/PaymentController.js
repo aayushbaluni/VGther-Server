@@ -92,6 +92,7 @@ export const getAllPayment=async(req,res)=>{
   .post("https://vgthr.authlink.me", payload, { headers: headers })
   .then(async (response) => {
     if (response.data.statusCode === 200 && response.data.user.waNumber === mobile) {
+      console.log("here")
       const result = await PaymentModel.find({ parent_number: mobile });
       res.send(result);
     }
