@@ -1,6 +1,6 @@
 PORT=4000
-RAZORPAY_API_KEY="rzp_live_gjrprcZ5HLXBO7"
-RAZORPAY_API_SECRET="R6JFBwIT2SgA6CIkw2WvdDYA"
+RAZORPAY_API_KEY="rzp_test_6xn6ZuV10FYIYx"
+RAZORPAY_API_SECRET="2o12lNOPDJdOh8hQm00R9pow"
 MONGO_URI='mongodb+srv://vghter:<f1Rzsql566XrA3yQ>@cluster0.ysjjrub.mongodb.net/?retryWrites=true&w=majority'
 
 ACCOUNT_SID='AC41b069d45cfdffdddf9a1206833adb33'
