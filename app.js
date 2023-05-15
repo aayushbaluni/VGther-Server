@@ -1,11 +1,10 @@
 import express from 'express';
-// import  {config} from 'dotenv'
+import  {config} from 'dotenv'
 import paymentRoute from './routes/PaymentRouter.js'
 import cors from 'cors';
 import verify from "./routes/Verify.js"
 import user from "./routes/UsersRoute.js"
-// config({path:'./config/config.js'});
-require('dotenv').config()
+config({path:'./config/config.js'});
 
 export const   app=express();
 app.use(cors())

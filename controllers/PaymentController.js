@@ -6,7 +6,7 @@ import {PaymentModel} from "../models/PaymentModel.js"
 import {OrderModel} from "../models/OrderModel.js"
 import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
-require('dotenv').config()
+
 export const checkout= async(req,res)=>{
   const notes=req.body.notes;
     const options=  {

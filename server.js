@@ -1,5 +1,5 @@
 import {app} from './app.js'
-require('dotenv').config()
+
 
 import Razorpay from 'razorpay'
 import {connectDB} from "./config/database.js";
