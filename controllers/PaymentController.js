@@ -5,7 +5,7 @@ import crypto from 'crypto'
 import {PaymentModel} from "../models/PaymentModel.js"
 import {OrderModel} from "../models/OrderModel.js"
 import { v4 as uuidv4 } from 'uuid';
-const { default: axios } = require("axios");
+import axois from "axios";
 export const checkout= async(req,res)=>{
   const notes=req.body.notes;
     const options=  {
@@ -89,18 +89,19 @@ export const getAllPayment=async(req,res)=>{
   };
   const {mobile}=req.body;
   axios
-    .post("https://vgthr.authlink.me", payload, { headers: headers })
-    .then((response) => {
-      if(response.data.statusCode===200 && response.data.user.waNumber===mobile){
-        const result=await PaymentModel.find({parent_number:mobile});
-        res.send(result);
-      }
-    //   res.status(200).json(responseData);
-    })
-    .catch((err) => {
-      res.send({status:401});  
-      console.log(err)
-    })
+  .post("https://vgthr.authlink.me", payload, { headers: headers })
+  .then(async (response) => {
+    if (response.data.statusCode === 200 && response.data.user.waNumber === mobile) {
+      const result = await PaymentModel.find({ parent_number: mobile });
+      res.send(result);
+    }
+    // res.status(200).json(responseData);
+  })
+  .catch((err) => {
+    res.send({ status: 401 });
+    console.log(err);
+  });
+
 
   
 }
