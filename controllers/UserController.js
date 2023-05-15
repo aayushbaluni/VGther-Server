@@ -24,7 +24,8 @@ export const login=async(req,res)=>{
     if(result.length==0){console.log("Not Present");return res.status(401).send([]); }
     console.log(result);
     res.send(result);
-}   
+}
+
 
 export const message=async(req,res)=>{
     const {name,email,message}=req.body;
