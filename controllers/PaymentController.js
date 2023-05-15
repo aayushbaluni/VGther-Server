@@ -5,14 +5,12 @@ import crypto from 'crypto'
 import {PaymentModel} from "../models/PaymentModel.js"
 import {OrderModel} from "../models/OrderModel.js"
 import { v4 as uuidv4 } from 'uuid';
+const { default: axios } = require("axios");
 export const checkout= async(req,res)=>{
   const notes=req.body.notes;
     const options=  {
         amount: Number(req.body.amount*100),
-        currency: "INR",
-       
-      
-       
+        currency: "INR", 
   }
   const order=await instance.orders.create(options)
   
@@ -79,8 +77,30 @@ export const getpayment=async(req,res)=>{
   res.send(result);
 }
 
+
 export const getAllPayment=async(req,res)=>{
-  const {number}=req.body;
-  const result=await PaymentModel.find({parent_number:number});
-  res.send(result);
+  const payload = {
+    waId: req.body.token,
+  };
+  const headers = {
+    clientId: "02fz9i8d",
+    clientSecret: "cjzgfh73hsqxgnt8",
+    "Content-Type": "application/json",
+  };
+  const {mobile}=req.body;
+  axios
+    .post("https://vgthr.authlink.me", payload, { headers: headers })
+    .then((response) => {
+      if(response.data.statusCode===200 && response.data.user.waNumber===mobile){
+        const result=await PaymentModel.find({parent_number:mobile});
+        res.send(result);
+      }
+    //   res.status(200).json(responseData);
+    })
+    .catch((err) => {
+      res.send({status:401});  
+      console.log(err)
+    })
+
+  
 }
