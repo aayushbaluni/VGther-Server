@@ -87,7 +87,7 @@ export const getAllPayment=async(req,res)=>{
     clientSecret: "cjzgfh73hsqxgnt8",
     "Content-Type": "application/json",
   };
-  const {mobile}=req.body;
+  const mobile=req.body.mobile.number;
   axios
   .post("https://vgthr.authlink.me", payload, { headers: headers })
   .then(async (response) => {
