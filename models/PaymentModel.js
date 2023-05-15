@@ -28,8 +28,7 @@ const PaymentSchema=new mongoose.Schema({
         ticket_number:{
             type:String,
             // required:true,
-        },
-        
+        }, 
     },
     
 ]
