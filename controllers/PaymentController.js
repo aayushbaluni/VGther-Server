@@ -5,7 +5,7 @@ import crypto from 'crypto'
 import {PaymentModel} from "../models/PaymentModel.js"
 import {OrderModel} from "../models/OrderModel.js"
 import { v4 as uuidv4 } from 'uuid';
-import axois from "axios";
+import axios from "axios";
 export const checkout= async(req,res)=>{
   const notes=req.body.notes;
     const options=  {
