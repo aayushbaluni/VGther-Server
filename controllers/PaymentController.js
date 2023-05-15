@@ -96,6 +96,9 @@ export const getAllPayment=async(req,res)=>{
       const result = await PaymentModel.find({ parent_number: mobile });
       res.send(result);
     }
+    else{
+      res.send({ status: 404 });
+    }
     // res.status(200).json(responseData);
   })
   .catch((err) => {
