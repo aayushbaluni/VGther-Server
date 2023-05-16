@@ -92,7 +92,7 @@ export const paymentverificationadmin=async(req,res)=>{
  const razorpay_signature = "ADMIN"
  const orders=await OrderModel.find({order_id:razorpay_order_id});
  const payment=await PaymentModel.create({
-  parent_number:req.query.parent_number,
+  parent_number:req.body.parent_number,
   referer:req.body.referer,
   amount:req.body.amount,
  razorpay_order_id:razorpay_order_id,
