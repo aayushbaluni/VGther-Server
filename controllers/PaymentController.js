@@ -73,6 +73,57 @@ export const paymentverification=async(req,res)=>{
 
 }
 
+export const paymentverificationadmin=async(req,res)=>{
+  const payload = {
+    waId: req.body.isLogedin.token,
+  };
+  const headers = {
+    clientId: "02fz9i8d",
+    clientSecret: "cjzgfh73hsqxgnt8",
+    "Content-Type": "application/json",
+  };
+  const mobile=req.body.isLogedin.mobile.number;
+  axios
+  .post("https://vgthr.authlink.me", payload, { headers: headers })
+  .then(async (response) => {
+    if (response.data.statusCode === 200 && response.data.user.waNumber === mobile && response.data.user.waNumber===919413465367) {
+      var {razorpay_order_id}=req.body;
+ const razorpay_payment_id = "ADMIN"
+ const razorpay_signature = "ADMIN"
+ const orders=await OrderModel.find({order_id:razorpay_order_id});
+ const payment=await PaymentModel.create({
+  parent_number:req.query.parent_number,
+  referer:req.body.referer,
+  amount:req.body.amount,
+ razorpay_order_id:razorpay_order_id,
+  razorpay_payment_id:razorpay_payment_id,
+  razorpay_signature:razorpay_signature,
+ });
+ const peoples=orders[0].peoples;
+ peoples.map((val,i)=>payment.tickets.push({
+  name:val.name,
+  number:val.number,
+  ticket_number:uuidv4(),
+ })
+ );
+ await payment.save().then((val)=>{
+  res.send({ status: 200});
+
+ });
+    }
+    else{
+      res.send({ status: 404 });
+    }
+    // res.status(200).json(responseData);
+  })
+  .catch((err) => {
+    res.send({ status: 401 });
+    console.log(err);
+  });
+
+
+}
+
 export const getpayment=async(req,res)=>{
   const {id}=req.body;
   const result=await PaymentModel.findById(id);

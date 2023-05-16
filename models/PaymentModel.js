@@ -12,6 +12,10 @@ const PaymentSchema=new mongoose.Schema({
         type:String,
         required:true,  
     },
+    amount:{
+        type:String,
+        // required:true,  
+    },
     parent_number:{
         type:String,
         required:true
