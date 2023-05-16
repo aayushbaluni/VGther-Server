@@ -16,6 +16,10 @@ const PaymentSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    referer:{
+        type:String,
+        required:true
+    },
     tickets:[{
         name:{
             type: String,

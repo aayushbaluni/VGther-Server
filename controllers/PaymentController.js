@@ -52,6 +52,7 @@ export const paymentverification=async(req,res)=>{
  const orders=await OrderModel.find({order_id:razorpay_order_id});
  const payment=await PaymentModel.create({
   parent_number:req.query.parent_number,
+  referer:req.query.referer,
  razorpay_order_id:razorpay_order_id,
   razorpay_payment_id:razorpay_payment_id,
   razorpay_signature:razorpay_signature,
