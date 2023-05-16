@@ -29,7 +29,7 @@ export const login=async(req,res)=>{
 
 export const coupon=async(req,res)=>{
     try {
-        const { code } = req.params;
+        const { code } = req.body;
         const coupon = await Coupon.findOne({ code });
         
         if (coupon) {
