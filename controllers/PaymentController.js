@@ -86,7 +86,7 @@ export const paymentverificationadmin=async(req,res)=>{
   axios
   .post("https://vgthr.authlink.me", payload, { headers: headers })
   .then(async (response) => {
-    if (response.data.statusCode === 200 && response.data.user.waNumber === mobile && response.data.user.waNumber===919413465367) {
+    if (response.data.statusCode === 200 && response.data.user.waNumber === mobile && response.data.user.waNumber.toString()==="919413465367") {
       var {razorpay_order_id}=req.body;
  const razorpay_payment_id = "ADMIN"
  const razorpay_signature = "ADMIN"
