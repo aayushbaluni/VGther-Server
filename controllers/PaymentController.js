@@ -107,7 +107,7 @@ export const paymentverificationadmin=async(req,res)=>{
  })
  );
  await payment.save().then((val)=>{
-  res.send({ status: 200});
+  res.send({ status: 200,ticket_id:val._id});
 
  });
     }
