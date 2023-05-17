@@ -24,6 +24,7 @@
     "react-barcode": "^1.4.6",
     "twilio": "^4.11.0",
     "uuid": "^9.0.0",
-    "axios":"1.4.0"
+    "axios":"1.4.0",
+    "moment-timezone": "^0.5.43"
   }
 }

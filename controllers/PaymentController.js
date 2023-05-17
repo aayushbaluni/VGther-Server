@@ -6,7 +6,7 @@ import {PaymentModel} from "../models/PaymentModel.js"
 import {OrderModel} from "../models/OrderModel.js"
 import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
-
+import moment from "moment-timezone"
 export const checkout= async(req,res)=>{
   const notes=req.body.notes;
     const options=  {
@@ -30,29 +30,68 @@ export const checkout= async(req,res)=>{
 
 
 export const paymentverification=async(req,res)=>{
-  console.log(req.body);
-  let body=req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
- var expectedSign=crypto.createHmac('sha256',process.env.RAZORPAY_API_SECRET).update(body.toString()).digest('hex')
- 
- if(expectedSign!=req.body.razorpay_signature){
-  return res.send("Sorry Wrong Information...");
- }
- var a=uuidv4().toString();
- console.log(a);
- var {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body;
- razorpay_order_id=razorpay_order_id.toString();
+  const indianTimezone = 'Asia/Kolkata';
+const currentTime = moment().tz(indianTimezone).valueOf();
+var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
+// if(razorpay_payment_id){
+//   return res.send("Sorry Wrong Information...");
+//  }
+  axios.get('https://payments-tesseract.bharatpe.in/api/v1/merchant/transactions', {
+    params: {
+      'module': 'PAYMENT_QR',
+      'merchantId': '41134598',
+      'sDate': '1684261800000',
+      'eDate': currentTime.toString()
+    },
+    headers: {
+      'authority': 'payments-tesseract.bharatpe.in',
+      'accept': 'application/json, text/javascript, */*; q=0.01',
+      'accept-language': 'en-GB,en;q=0.8',
+      'origin': 'https://enterprise.bharatpe.in',
+      'referer': 'https://enterprise.bharatpe.in/',
+      'sec-ch-ua': '"Chromium";v="112", "Brave";v="112", "Not:A-Brand";v="99"',
+      'sec-ch-ua-mobile': '?0',
+      'sec-ch-ua-platform': '"macOS"',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-site',
+      'sec-gpc': '1',
+      'token': 'aa177567d8e44c448e2b7d81c0b2faa5',
+      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
+    }
+  }).then(async (response)=>{
+    console.log(response.data.data.transactions[0].bankReferenceNo)
+    var state = true
+    var index;
+    for(var i=0;i<response.data.data.transactions.length;i++){
+      if(response.data.data.transactions[0].bankReferenceNo==razorpay_payment_id){
+        state = false;
+        index = i;
+        break
+      }
+    }
+    if(state){console.log("No payment received");return res.status(402).send([]); }
+    const result=await PaymentModel.find({razorpay_payment_id:razorpay_payment_id});
+    if(result.length!==0){console.log("already present");return res.status(401).send([]); }
+    razorpay_order_id=razorpay_order_id.toString();
  razorpay_payment_id=razorpay_payment_id.toString();
- razorpay_signature=razorpay_signature.toString();
- console.log(razorpay_order_id);
- console.log(razorpay_payment_id);
- console.log(razorpay_signature);
- const order=await instance.orders.fetch(razorpay_order_id);
- console.log(order.notes);
+ razorpay_signature="NA";
 
  const orders=await OrderModel.find({order_id:razorpay_order_id});
+ var amount;
+ if(orders[0].peoples.length%5==0){
+  amount = 300;
+ }
+ else{
+  amount=350;
+ }
+ if(orders[0].peoples.length*amount!=response.data.data.transactions[index].amount){
+  console.log("Amount didnt match")
+  return res.status(403).send([]);
+ }
  const payment=await PaymentModel.create({
-  parent_number:req.query.parent_number,
-  referer:req.query.referer,
+  parent_number:parent_number,
+  referer:referer,
  razorpay_order_id:razorpay_order_id,
   razorpay_payment_id:razorpay_payment_id,
   razorpay_signature:razorpay_signature,
@@ -69,6 +108,10 @@ export const paymentverification=async(req,res)=>{
   res.redirect(`https://www.vgthr.com/paymentsucess?id=${val._id}`)
 
  });
+
+  })
+
+ 
 
 
 }
