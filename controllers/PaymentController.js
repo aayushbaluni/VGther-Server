@@ -105,7 +105,7 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  );
  await payment.save().then((val)=>{
   console.log(val);
-  res.redirect(`https://www.vgthr.com/paymentsucess?id=${val._id}`)
+  res.status(200).send({status:200,ticket_id:val._id});
 
  });
 
