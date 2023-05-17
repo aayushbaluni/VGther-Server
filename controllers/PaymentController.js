@@ -75,7 +75,7 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
     if(result.length!==0){console.log("already present");return res.status(401).send([]); }
     razorpay_order_id=razorpay_order_id.toString();
  razorpay_payment_id=razorpay_payment_id.toString();
- razorpay_signature="NA";
+ var razorpay_signature="NA";
 
  const orders=await OrderModel.find({order_id:razorpay_order_id});
  var amount;
