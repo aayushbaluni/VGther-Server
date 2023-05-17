@@ -64,7 +64,7 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
     var state = true
     var index;
     for(var i=0;i<response.data.data.transactions.length;i++){
-      if(response.data.data.transactions[0].bankReferenceNo==razorpay_payment_id){
+      if(response.data.data.transactions[i].bankReferenceNo==razorpay_payment_id){
         state = false;
         index = i;
         break
