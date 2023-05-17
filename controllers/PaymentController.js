@@ -83,6 +83,7 @@ export const paymentverificationadmin=async(req,res)=>{
     "Content-Type": "application/json",
   };
   const mobile=req.body.isLogedin.mobile.number;
+  const authUsers = ["919413465367","919079907146","918005943828"]
   axios
   .post("https://vgthr.authlink.me", payload, { headers: headers })
   .then(async (response) => {
@@ -90,7 +91,7 @@ export const paymentverificationadmin=async(req,res)=>{
     console.log(response.data.statusCode === 200)
     console.log(response.data.user.waNumber === mobile)
     console.log(response.data.user.waNumber.toString()==="919413465367")
-    if (response.data.statusCode === 200 && response.data.user.waNumber === mobile && response.data.user.waNumber.toString()==="919413465367") {
+    if (response.data.statusCode === 200 && response.data.user.waNumber === mobile && authUsers.includes(response.data.user.waNumber.toString())) {
       var {razorpay_order_id}=req.body;
  const razorpay_payment_id = "ADMIN"
  const razorpay_signature = "ADMIN"
