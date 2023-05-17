@@ -80,12 +80,13 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  const orders=await OrderModel.find({order_id:razorpay_order_id});
  var amount;
  if(orders[0].peoples.length%5==0){
-  amount = 300;
+  amount = 1;
  }
  else{
-  amount=350;
+  amount=1;
  }
- if(orders[0].peoples.length*amount!=response.data.data.transactions[index].amount){
+ //orders[0].peoples.length*
+ if(amount!=response.data.data.transactions[index].amount){
   console.log("Amount didnt match")
   return res.status(200).send({status:403,error:"Amount didnt match"});
  }
