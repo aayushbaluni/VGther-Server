@@ -70,9 +70,9 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
         break
       }
     }
-    if(state){console.log("No payment received");return res.status(402).send([]); }
+    if(state){console.log("No payment received");return res.status(200).send({status:402,error:"No payment received"}); }
     const result=await PaymentModel.find({razorpay_payment_id:razorpay_payment_id});
-    if(result.length!==0){console.log("already present");return res.status(401).send([]); }
+    if(result.length!==0){console.log("already present");return res.status(200).send({status:401,error:"Already Present"}); }
     razorpay_order_id=razorpay_order_id.toString();
  razorpay_payment_id=razorpay_payment_id.toString();
  var razorpay_signature="NA";
@@ -87,12 +87,12 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  }
  if(orders[0].peoples.length*amount!=response.data.data.transactions[index].amount){
   console.log("Amount didnt match")
-  return res.status(403).send([]);
+  return res.status(200).send({status:403,error:"Amount didnt match"});
  }
  const payment=await PaymentModel.create({
   parent_number:parent_number,
   referer:referer,
- razorpay_order_id:razorpay_order_id,
+  razorpay_order_id:razorpay_order_id,
   razorpay_payment_id:razorpay_payment_id,
   razorpay_signature:razorpay_signature,
  });
