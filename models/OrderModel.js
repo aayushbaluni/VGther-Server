@@ -13,6 +13,9 @@ const OrderSchema=new mongoose.Schema({
         },
         number:{
             type:String,
+        },
+        college_id:{
+            type:String,
         }
     }]
 })

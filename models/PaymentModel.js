@@ -33,6 +33,10 @@ const PaymentSchema=new mongoose.Schema({
             type: String,
             // required:true,
         },
+        college_id:{
+            type: String,
+            // required:true,
+        },
         ticket_number:{
             type:String,
             // required:true,

@@ -101,6 +101,7 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  peoples.map((val,i)=>payment.tickets.push({
   name:val.name,
   number:val.number,
+  college_id:val.college_id,
   ticket_number:uuidv4(),
  })
  );
@@ -152,6 +153,7 @@ export const paymentverificationadmin=async(req,res)=>{
  peoples.map((val,i)=>payment.tickets.push({
   name:val.name,
   number:val.number,
+  college_id:val.college_id,
   ticket_number:uuidv4(),
  })
  );
