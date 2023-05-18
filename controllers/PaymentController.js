@@ -89,7 +89,7 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
   }
  }
 var times = orders[0].peoples.length;
-amount = refCodes.includes(referer)?times%5==0?amount-50*times:amount:times%5==0?amount-70*times:amount-20*times
+var amountFinal = refCodes.includes(referer)?times%5==0?amount-50*times:amount:times%5==0?amount-70*times:amount-20*times
 
 //  if(orders[0].peoples.length%5==0){
 //   if(refCodes.includes(referer)){
@@ -108,7 +108,7 @@ amount = refCodes.includes(referer)?times%5==0?amount-50*times:amount:times%5==0
 //   }
 //  }
  //orders[0].peoples.length*
- if(amount!=response.data.data.transactions[index].amount){
+ if(amountFinal!=response.data.data.transactions[index].amount){
   console.log("Amount didnt match")
   return res.status(200).send({status:403,error:"Amount didnt match"});
  }
