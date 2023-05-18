@@ -31,6 +31,7 @@ export const checkout= async(req,res)=>{
 
 export const paymentverification=async(req,res)=>{
   const indianTimezone = 'Asia/Kolkata';
+  const refCodes = ['7IHZ', 'Y8BK', 'A49L', 'LMZH', 'LRVV', 'ZC88', 'L0BJ', 'SPZW', 'SNGH', '09AG', '3PBY', 'IEN0', '8N6J']
 const currentTime = moment().tz(indianTimezone).valueOf();
 var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
 // if(razorpay_payment_id){
@@ -80,10 +81,20 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  const orders=await OrderModel.find({order_id:razorpay_order_id});
  var amount;
  if(orders[0].peoples.length%5==0){
-  amount = 1;
+  if(refCodes.includes(referer)){
+    amount = 280;
+  }
+  else{
+    amount = 300;
+  }
  }
  else{
-  amount=1;
+  if(refCodes.includes(referer)){
+    amount = 330;
+  }
+  else{
+    amount = 350;
+  }
  }
  //orders[0].peoples.length*
  if(amount!=response.data.data.transactions[index].amount){
