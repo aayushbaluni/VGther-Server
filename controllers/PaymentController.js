@@ -81,7 +81,7 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  const orders=await OrderModel.find({order_id:razorpay_order_id});
  var amount;
  for(var i=0;i<orders[0].peoples.length;i++){
-  if(orders[0].peoples.college_id=="NA"){
+  if(orders[0].peoples[i].college_id=="NA"){
     amount+=500;
   }
   else{
