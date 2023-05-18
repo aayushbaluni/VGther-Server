@@ -139,7 +139,7 @@ export const paymentverificationadmin=async(req,res)=>{
     "Content-Type": "application/json",
   };
   const mobile=req.body.isLogedin.mobile.number;
-  const authUsers = ["919413465367","919079907146","918005943828"]
+  const authUsers = ["919413465367","919079907146","918005943828","919079124770"]
   axios
   .post("https://vgthr.authlink.me", payload, { headers: headers })
   .then(async (response) => {
