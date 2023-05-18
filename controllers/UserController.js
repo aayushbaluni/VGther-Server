@@ -28,18 +28,17 @@ export const login=async(req,res)=>{
 }
 
 export const coupon=async(req,res)=>{
+  const refCodes = ['7IHZ', 'Y8BK', 'A49L', 'LMZH', 'LRVV', 'ZC88', 'L0BJ', 'SPZW', 'SNGH', '09AG', '3PBY', 'IEN0', '8N6J']
     try {
         const { code } = req.body;
-        const coupon = await Coupon.findOne({ code });
-        
-        if (coupon) {
-          res.json({ discountAmount: coupon.discountAmount });
+        if (refCodes.includes(code)) {
+          return res.status(200).send({status:200});
         } else {
-          res.status(404).json({ message: 'Coupon code not found' });
+          return res.status(200).send({status:403,error:"Coupon didnt exists"});
         }
       } catch (error) {
         console.error('Error:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).send({ status:500,error: 'Server error' });
       }
 }
 
