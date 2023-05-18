@@ -109,7 +109,7 @@ var times = orders[0].peoples.length;
   }
  }
  //orders[0].peoples.length*
- if(amountFinal!=response.data.data.transactions[index].amount){
+ if(amount!=response.data.data.transactions[index].amount){
   console.log("Amount didnt match")
   return res.status(200).send({status:403,error:"Amount didnt match"});
  }
