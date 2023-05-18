@@ -80,22 +80,33 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
 
  const orders=await OrderModel.find({order_id:razorpay_order_id});
  var amount;
- if(orders[0].peoples.length%5==0){
-  if(refCodes.includes(referer)){
-    amount = 280;
+ for(var i=0;i<orders[0].peoples.length;i++){
+  if(orders[0].peoples.college_id=="NA"){
+    amount+=500;
   }
   else{
-    amount = 300;
+    amount=350;
   }
  }
- else{
-  if(refCodes.includes(referer)){
-    amount = 330;
-  }
-  else{
-    amount = 350;
-  }
- }
+var times = orders[0].peoples.length;
+amount = refCodes.includes(referer)?times%5==0?amount-50*times:amount:times%5==0?amount-70*times:amount-20*times
+
+//  if(orders[0].peoples.length%5==0){
+//   if(refCodes.includes(referer)){
+//     amount = 280;
+//   }
+//   else{
+//     amount = 300;
+//   }
+//  }
+//  else{
+//   if(refCodes.includes(referer)){
+//     amount = 330;
+//   }
+//   else{
+//     amount = 350;
+//   }
+//  }
  //orders[0].peoples.length*
  if(amount!=response.data.data.transactions[index].amount){
   console.log("Amount didnt match")
