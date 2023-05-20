@@ -89,7 +89,7 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
   }
  }
 var times = orders[0].peoples.length;
-var amountFinal = refCodes.includes(referer)?times%5==0?amount-70*times:amount-20*times:times%5==0?amount-50*times:amount
+var amountFinal = refCodes.includes(referer)?times%5==0?amount-150*times:amount-100*times:times%5==0?amount-50*times:amount
 
 console.log(amountFinal)
 //  if(orders[0].peoples.length%5==0){
