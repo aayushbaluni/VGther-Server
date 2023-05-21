@@ -82,15 +82,21 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  var amount=0;
  for(var i=0;i<orders[0].peoples.length;i++){
   if(orders[0].peoples[i].college_id=="NA"){
-    amount+=299;
+    amount+=399;
   }
   else{
-    amount+=199;
+    amount+=299;
   }
  }
 var times = orders[0].peoples.length;
-var amountFinal = amount
-//refCodes.includes(referer)?times%5==0?amount-150*times:amount-100*times:times%5==0?amount-50*times:amount
+var amountFinal;
+if(referer!="NA"){
+  amountFinal = amount-100*times;
+}
+else{
+  amountFinal = amount;
+}
+// refCodes.includes(referer)?times%5==0?amount-150*times:amount-100*times:times%5==0?amount-50*times:amount
 
 console.log(amountFinal)
 //  if(orders[0].peoples.length%5==0){
