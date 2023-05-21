@@ -252,12 +252,15 @@ export const getRewards=async(req,res)=>{
   .then(async (response) => {
     if (response.data.statusCode === 200 && response.data.user.waNumber === mobile) {
       console.log("here")
+      var arr = []
       const persons = await PaymentModel.find({ referer: mobile })
-      console.log(persons)
-    if (persons.length > 0) {
+      for(var i=0;i<persons.length;i++){
+        arr.push(persons[i].tickets[0].name)
+      }
+      console.log(arr)
+    if (arr.length > 0) {
       // Extract the names from the persons array
-      const names = persons.map((person) => person.name);
-      res.send({names:names});
+      res.send({names:arr});
     } else {
       res.send({ status: 404 });
     }
