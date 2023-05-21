@@ -41,7 +41,7 @@ export const coupon=async(req,res)=>{
     if (parentNumberExists && refererCount < 10) {
       return res.status(200).send({status:200});
     } else if (refererCount >= 10) {
-      return res.status(202).send({status:202});
+      return res.status(200).send({status:202});
     } else {
       return res.status(200).send({status:404,error:"Coupon didnt exists"});
     }
