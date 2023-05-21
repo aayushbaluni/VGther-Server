@@ -36,11 +36,18 @@ export const coupon=async(req,res)=>{
         const parentNumberExists = await PaymentModel.exists({ parent_number: mobileno });
 
     // Counting the number of documents with the given number at the referer field
-    const refererCount = await PaymentModel.countDocuments({ referer: mobileno });
+    // const refererCount = await PaymentModel.countDocuments({ referer: mobileno });
+    var arr = []
+      const persons = await PaymentModel.find({ referer: mobileno })
+      for(var i=0;i<persons.length;i++){
+        for(var j=0;j<persons[i].tickets.length;j++){
+          arr.push(persons[i].tickets[j].name)
+        }
+      }
 
-    if (parentNumberExists && refererCount < 10) {
+    if (parentNumberExists && arr.length < 10) {
       return res.status(200).send({status:200});
-    } else if (refererCount >= 10) {
+    } else if (arr.length >= 10) {
       return res.status(200).send({status:202});
     } else {
       return res.status(200).send({status:404,error:"Coupon didnt exists"});
