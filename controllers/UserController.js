@@ -43,7 +43,7 @@ export const coupon=async(req,res)=>{
     } else if (refererCount >= 10) {
       return res.status(202).send({status:202});
     } else {
-      return res.status(404).send({status:404,error:"Coupon didnt exists"});
+      return res.status(200).send({status:404,error:"Coupon didnt exists"});
     }
       } catch (error) {
         console.error('Error:', error);
