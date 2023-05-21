@@ -237,7 +237,7 @@ export const getAllPayment=async(req,res)=>{
 
   
 }
-export const myRewards=async(req,res)=>{
+export const getRewards=async(req,res)=>{
   const payload = {
     waId: req.body.token,
   };
