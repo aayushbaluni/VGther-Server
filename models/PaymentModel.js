@@ -22,7 +22,7 @@ const PaymentSchema=new mongoose.Schema({
     },
     referer:{
         type:String,
-        required:true
+        required:false
     },
     tickets:[{
         name:{
@@ -35,6 +35,7 @@ const PaymentSchema=new mongoose.Schema({
         },
         college_id:{
             type: String,
+            unique: true
             // required:true,
         },
         ticket_number:{

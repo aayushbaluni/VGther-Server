@@ -82,14 +82,15 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
  var amount=0;
  for(var i=0;i<orders[0].peoples.length;i++){
   if(orders[0].peoples[i].college_id=="NA"){
-    amount+=500;
+    amount+=299;
   }
   else{
-    amount+=350;
+    amount+=199;
   }
  }
 var times = orders[0].peoples.length;
-var amountFinal = refCodes.includes(referer)?times%5==0?amount-150*times:amount-100*times:times%5==0?amount-50*times:amount
+var amountFinal = amount
+//refCodes.includes(referer)?times%5==0?amount-150*times:amount-100*times:times%5==0?amount-50*times:amount
 
 console.log(amountFinal)
 //  if(orders[0].peoples.length%5==0){
@@ -115,7 +116,7 @@ console.log(amountFinal)
  }
  const payment=await PaymentModel.create({
   parent_number:parent_number,
-  referer:referer,
+  referer:`91${referer}`,
   razorpay_order_id:razorpay_order_id,
   razorpay_payment_id:razorpay_payment_id,
   razorpay_signature:razorpay_signature,
@@ -225,6 +226,45 @@ export const getAllPayment=async(req,res)=>{
     }
     else{
       res.send({ status: 404 });
+    }
+    // res.status(200).json(responseData);
+  })
+  .catch((err) => {
+    res.send({ status: 401 });
+    console.log(err);
+  });
+
+
+  
+}
+export const myRewards=async(req,res)=>{
+  const payload = {
+    waId: req.body.token,
+  };
+  const headers = {
+    clientId: "02fz9i8d",
+    clientSecret: "cjzgfh73hsqxgnt8",
+    "Content-Type": "application/json",
+  };
+  const mobile=req.body.mobile.number;
+  axios
+  .post("https://vgthr.authlink.me", payload, { headers: headers })
+  .then(async (response) => {
+    if (response.data.statusCode === 200 && response.data.user.waNumber === mobile) {
+      console.log("here")
+      const persons = await PaymentModel.find({ referer: mobile }).select("name");
+
+    if (persons.length > 0) {
+      // Extract the names from the persons array
+      const names = persons.map((person) => person.name);
+      res.send({names:names});
+    } else {
+      res.send({ status: 404 });
+    }
+      
+    }
+    else{
+      res.send({ status: 501 });
     }
     // res.status(200).json(responseData);
   })

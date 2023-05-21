@@ -1,6 +1,7 @@
 import mongoose  from "mongoose"
 import {UserModel} from "../models/UserModel.js"
 import {CoupomModel} from "../models/CouponModel.js"
+import {PaymentModel} from "../models/PaymentModel.js"
 import axios from "axios";
  export  const register=async(req,res)=>{
     const {name,number}=req.body;
@@ -31,16 +32,27 @@ export const coupon=async(req,res)=>{
   const refCodes = ['7IHZ', 'Y8BK', 'A49L', 'LMZH', 'LRVV', 'ZC88', 'L0BJ', 'SPZW', 'SNGH', '09AG', '3PBY', 'IEN0', '8N6J']
     try {
         const { code } = req.body;
-        if (refCodes.includes(code)) {
-          return res.status(200).send({status:200});
-        } else {
-          return res.status(200).send({status:403,error:"Coupon didnt exists"});
-        }
+        var mobileno = `91${code}`
+        const parentNumberExists = await PaymentModel.exists({ parent_number: mobileno });
+
+    // Counting the number of documents with the given number at the referer field
+    const refererCount = await PaymentModel.countDocuments({ referer: mobileno });
+
+    if (parentNumberExists && refererCount < 10) {
+      return res.status(200).send({status:200});
+    } else if (refererCount >= 10) {
+      return res.status(202).send({status:202});
+    } else {
+      return res.status(404).send({status:404,error:"Coupon didnt exists"});
+    }
       } catch (error) {
         console.error('Error:', error);
         res.status(500).send({ status:500,error: 'Server error' });
       }
 }
+
+
+
 
 
 export const message=async(req,res)=>{
