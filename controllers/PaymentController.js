@@ -88,13 +88,41 @@ var {razorpay_order_id,razorpay_payment_id,parent_number,referer}=req.body;
     amount+=299;
   }
  }
+ var whoreferred;
 var times = orders[0].peoples.length;
 var amountFinal;
+
 if(referer!="NA"){
-  amountFinal = amount-100*times;
+  whoreferred=`91${referer}`
+  const parentNumberExists = await PaymentModel.exists({ parent_number: whoreferred });
+
+    // Counting the number of documents with the given number at the referer field
+    // const refererCount = await PaymentModel.countDocuments({ referer: mobileno });
+    var arr = []
+      const persons = await PaymentModel.find({ referer: whoreferred })
+      for(var i=0;i<persons.length;i++){
+        for(var j=0;j<persons[i].tickets.length;j++){
+          arr.push(persons[i].tickets[j].name)
+        }
+      }
+
+    if (parentNumberExists && arr.length < 10) {
+      amountFinal = amount-100*times;
+      // return res.status(200).send({status:200});
+    } else if (arr.length >= 10) {
+      whoreferred="NA"
+      return res.status(200).send({status:202});
+    } else {
+      whoreferred="NA"
+      return res.status(200).send({status:404,error:"Coupon didnt exists"});
+    }
+  
+  
 }
 else{
+
   amountFinal = amount;
+  whoreferred="NA"
 }
 // refCodes.includes(referer)?times%5==0?amount-150*times:amount-100*times:times%5==0?amount-50*times:amount
 
@@ -122,7 +150,7 @@ console.log(amountFinal)
  }
  const payment=await PaymentModel.create({
   parent_number:parent_number,
-  referer:`91${referer}`,
+  referer:whoreferred,
   razorpay_order_id:razorpay_order_id,
   razorpay_payment_id:razorpay_payment_id,
   razorpay_signature:razorpay_signature,
@@ -175,7 +203,7 @@ export const paymentverificationadmin=async(req,res)=>{
   parent_number:req.body.parent_number,
   referer:req.body.referer,
   amount:req.body.amount,
- razorpay_order_id:razorpay_order_id,
+  razorpay_order_id:razorpay_order_id,
   razorpay_payment_id:razorpay_payment_id,
   razorpay_signature:razorpay_signature,
  });

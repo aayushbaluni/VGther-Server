@@ -29,7 +29,6 @@ export const login=async(req,res)=>{
 }
 
 export const coupon=async(req,res)=>{
-  const refCodes = ['7IHZ', 'Y8BK', 'A49L', 'LMZH', 'LRVV', 'ZC88', 'L0BJ', 'SPZW', 'SNGH', '09AG', '3PBY', 'IEN0', '8N6J']
     try {
         const { code } = req.body;
         var mobileno = `91${code}`
