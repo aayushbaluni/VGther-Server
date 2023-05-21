@@ -261,7 +261,10 @@ export const getRewards=async(req,res)=>{
       var arr = []
       const persons = await PaymentModel.find({ referer: mobile })
       for(var i=0;i<persons.length;i++){
-        arr.push(persons[i].tickets[0].name)
+        for(var j=0;j<persons[i].tickets.length;j++){
+          arr.push(persons[i].tickets[j].name)
+        }
+        // arr.push(persons[i].tickets[0].name)
       }
       console.log(arr)
     if (arr.length > 0) {
