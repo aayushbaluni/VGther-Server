@@ -35,7 +35,7 @@ const PaymentSchema=new mongoose.Schema({
         },
         college_id:{
             type: String,
-            unique: true
+            unique: true,
             // required:true,
         },
         ticket_number:{
