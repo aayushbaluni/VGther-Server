@@ -253,7 +253,7 @@ export const getRewards=async(req,res)=>{
     if (response.data.statusCode === 200 && response.data.user.waNumber === mobile) {
       console.log("here")
       const persons = await PaymentModel.find({ referer: mobile }).select("name");
-
+      console.log(persons)
     if (persons.length > 0) {
       // Extract the names from the persons array
       const names = persons.map((person) => person.name);
