@@ -9,13 +9,13 @@ import axios from "axios";
     if(result.length!=0){
         console.log("Already exists");
         console.log(result);
-        res.status(401).send("Number Already Exists.")
+        res.status(200).send("Number Already Exists.")
     }
     else{
         const user=new UserModel({name:name,number:number});
         await user.save().then((val)=>{
             console.log(val);
-            res.send(val);
+            res.status(200).send("Done")
         })
     }
 }
